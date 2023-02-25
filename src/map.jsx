@@ -3,7 +3,7 @@ import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
 
 const libraries = ["places"];
 
-const Map = () => {
+const Map = ({ coordinates }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -23,10 +23,10 @@ const Map = () => {
       <GoogleMap
         onLoad={onLoad}
         zoom={10}
-        center={{lat: 44, lng: -80}}
+        center={{lat: coordinates[0], lng: coordinates[1]}}
         mapContainerClassName="map-container"
       >
-        {map && <Marker position={{ lat: 44, lng: -80 }} />}
+        {map && <Marker position={{ lat: coordinates[0], lng: coordinates[1] }} />}
       </GoogleMap>
     </div>
   )

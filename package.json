@@ -5,10 +5,12 @@
     "dotenv": "^16.0.3",
     "dotenv-webpack": "^8.0.1",
     "react": "^18.2.0",
+    "react-cool-onclickoutside": "^1.7.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "sass": "^1.58.3",
     "sass-loader": "^13.2.0",
+    "use-places-autocomplete": "^4.0.0",
     "yarn": "^1.22.19"
   },
   "name": "mvp",
