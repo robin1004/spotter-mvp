@@ -7,11 +7,18 @@ const App = () => {
 
   const [formStatus, setFormStatus] = useState(false);
 
+  const [inputAddress, setInputAddress] = useState("");
+
   const [preferences, setPreferences] = useState({
     availability: "",
     type: "",
     pricing: "",
   })
+
+  const addressHandler = (e) => {
+    let address = e.target.value;
+    setInputAddress(address);
+  }
 
   console.log(preferences);
 
@@ -19,7 +26,7 @@ const App = () => {
     <div>
       <h1>Find your forever Gym.</h1>
       <h2>Gyms near you that fit your needs</h2>
-      {!formStatus && <Address />}
+      {!formStatus && <Address addressHandler={addressHandler} />}
       {formStatus && <Map />}
       {!formStatus && <Form formStatus={formStatus} setFormStatus={setFormStatus} setPreferences={setPreferences}/>}
     </div>
