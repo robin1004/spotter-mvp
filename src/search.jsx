@@ -5,7 +5,7 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
-  const Search = ({ setCoordinates, setCordStatus }) => {
+  const Search = ({ setCoordinates, setCordStatus, formStatus, setAddressStatus }) => {
     const {
       ready,
       value,
@@ -35,6 +35,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
         // When user selects a place, we can replace the keyword without request data from API
         // by setting the second parameter to "false"
         setValue(description, false);
+        setAddressStatus(false);
         clearSuggestions();
 
         // Get latitude and longitude via utility functions

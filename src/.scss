@@ -3,8 +3,15 @@ h1 {
   justify-content: center;
 }
 
+.container {
+  position: relative;
+  height: 100%;
+  width: 1086px;
+}
+
 .map-container {
   display: flex;
+
   width: 50%;
   height: 50vh;
 }
@@ -17,4 +24,34 @@ h1 {
 
 body {
   background-color: gray;
+}
+
+// GYM THUMBNAILS
+.thumbnail-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.thumbnail {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  max-width: 274px;
+  height: 350px;
+  flex-basis: 33.3333333%;
+
+.thumbnailImage {
+  height: 164px;
+  min-height: 164px;
+}
+
+.thumbnailInfo {
+  height: 30%;
+      padding: 10px;
+      background-color: #eee;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+}
 }
