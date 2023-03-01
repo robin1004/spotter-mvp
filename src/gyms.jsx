@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Gyms = ({ gymInfo }) => {
+const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, favImages }) => {
   const [img, setImg] = useState(false);
   const [details, setDetails] = useState([]);
   const [images, setImages] = useState([]);
@@ -37,7 +37,6 @@ const Gyms = ({ gymInfo }) => {
           },
         })
         .then((results) => {
-          console.log(results);
           setDetails(results.data);
         })
         .catch((err) => {
@@ -52,7 +51,6 @@ const Gyms = ({ gymInfo }) => {
           },
         })
         .then((results) => {
-          console.log("here", results.data);
           setImages(results.data);
         })
         .catch((err) => {
@@ -66,21 +64,67 @@ const Gyms = ({ gymInfo }) => {
   const eachGym = (details, images) => {
     return details.map((detail, index) => {
       const image = images[index];
+      const favoriteHandler = () => {
+        axios({
+          method: 'post',
+          url: 'http://localhost:1100/favorites',
+          data: {
+            ref_id: detail.reference,
+            detail: detail,
+            image: image,
+          }
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log('error message: ', err);
+        })
+      }
       return (
-        <div className="thumbnail">
+        <div className="thumbnail" key={index}>
           <img className="thumbnailImage" src={image}></img>
           <div className="thumbnailInfo">
-          <div>{detail.name}</div>
-          <a href={detail.website}>
-            Website
-            </a>
+            <div>{detail.name}</div>
+            <div className="details">
+              <a href={detail.website}>Details</a>
+              <div>Gym in {detail.address_components[3].long_name}</div>
+              <button className="fav-button" value={{name: detail.name, website: detail.website}} onClick={favoriteHandler}><i class="fa fa-heart-o"></i></button>
+            </div>
           </div>
         </div>
       );
     });
   };
 
-  return <div className="thumbnail-container">{eachGym(details, images)}</div>;
+  const eachFav = (details) => {
+    return details.map((detail, index) => {
+      return (
+        <div className="thumbnail" key={index}>
+          <img className="thumbnailImage" src={detail.image}></img>
+          <div className="thumbnailInfo">
+            <div>{detail.detail.name}</div>
+            <div className="details">
+              <a href={detail.detail.website}>Details</a>
+              <div>Gym in {detail.detail.address_components[3].long_name}</div>
+              <button className="fav-button" value={{name: detail.detail.name, website: detail.detail.website}}><i class="fa fa-window-close-o"></i></button>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  return (
+    <div className="thumbnail-container">
+      {!favDisplay && eachGym(details, images)}
+      {favDisplay && eachFav(favorites)}
+      {/* {favDisplay && eachGym(favorites, images)} */}
+      {near && (
+        <div className="thumbnail-label">{`List of gyms near ${near}`}</div>
+      )}
+    </div>
+  );
 };
 
 export default Gyms;

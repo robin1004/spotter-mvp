@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
+import React, { useState } from "react";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 const libraries = ["places"];
 
-const Map = ({ coordinates }) => {
+const Map = ({ coordinates, gymInfo }) => {
+  console.log(gymInfo);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -18,18 +19,33 @@ const Map = ({ coordinates }) => {
     setMap(map);
   };
 
+  const gymCordinates = gymInfo.map((gym) => {
+    return (
+      <div>
+        <Marker
+          position={{
+            lat: gym.geometry.location.lat,
+            lng: gym.geometry.location.lng,
+          }}
+        />
+        ;
+      </div>
+    );
+  });
+
   return (
-    <div>
       <GoogleMap
         onLoad={onLoad}
         zoom={10}
-        center={{lat: coordinates[0], lng: coordinates[1]}}
+        center={{ lat: coordinates[0], lng: coordinates[1] }}
         mapContainerClassName="map-container"
       >
-        {map && <Marker position={{ lat: coordinates[0], lng: coordinates[1] }} />}
+        {map && (
+          <Marker position={{ lat: coordinates[0], lng: coordinates[1] }} />
+        )}
+        {map && gymCordinates}
       </GoogleMap>
-    </div>
-  )
-}
+  );
+};
 
 export default Map;

@@ -4,6 +4,9 @@ const path = require('path');
 const axios = require('axios');
 const app = express();
 const cors = require('cors');
+const db = require('../database/index.js')
+const { addToFavorites, getFavorites } = require('../database/db.js');
+
 
 app.use(cors());
 app.use(express.json());
@@ -65,6 +68,19 @@ app.get('/pics', async (req, res) => {
     return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&sensor=false&key=${process.env.SERVER_SIDE_API_KEY}`
     })
     res.send(photos);
+})
+
+app.get('/favorites', (req, res) => {
+  getFavorites()
+  .then((results) => {
+    console.log(results);
+    res.send(results);
+  })
+})
+
+app.post('/favorites', (req, res) => {
+  addToFavorites(req.body);
+    res.sendStatus(201);
 })
 
 app.listen(1100, () => {

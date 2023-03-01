@@ -3,6 +3,7 @@ import Map from "./map.jsx";
 import Form from "./form.jsx";
 import Search from "./search.jsx";
 import Gyms from "./gyms.jsx";
+import Banner from './banner.jsx'
 import axios from "axios";
 
 const App = () => {
@@ -10,17 +11,21 @@ const App = () => {
 
   const [cordStatus, setCordStatus] = useState(false);
 
-  const [addressStatus, setAddressStatus] = useState(false);
-
   const [coordinates, setCoordinates] = useState([]);
 
   const [preferences, setPreferences] = useState({
-    availability: "",
     type: "",
-    pricing: "",
   });
 
   const [gymInfo, setGymInfo] = useState([]);
+
+  const [near, setNear] = useState("");
+
+  const [favorites, setFavorites] = useState([]);
+
+  const [favImages, setFavImages] = useState([]);
+
+  const [favDisplay, setFavDisplay] = useState(false);
 
   useEffect(() => {
     async function searchGyms() {
@@ -45,26 +50,39 @@ const App = () => {
     searchGyms();
   }, [coordinates]);
 
-  console.log(gymInfo);
-  console.log(preferences.type);
+  useEffect(() => {
+    async function getFavorites() {
+      await axios.get("http://localhost:1100/favorites")
+      .then((results) => {
+        setFavorites(results.data);
+      })
+    }
+    getFavorites();
+  }, [])
 
   return (
-    <div className='container'>
-      {!formStatus && <h1>Find your forever Gym.</h1>}
-      {!formStatus && <h2>Gyms near you that fit your needs</h2>}
-      {addressStatus &&
-        <Search setCoordinates={setCoordinates} setCordStatus={setCordStatus} setAddressStatus={setAddressStatus}/>
-      }
-      {cordStatus && <Map coordinates={coordinates} />}
-      <Gyms gymInfo={gymInfo} />
-      {!formStatus && (
-        <Form
-          formStatus={formStatus}
-          setFormStatus={setFormStatus}
-          setPreferences={setPreferences}
-          setAddressStatus={setAddressStatus}
+    <div>
+      <Banner setFavorites={setFavorites} favDisplay={favDisplay} setFavDisplay={setFavDisplay} />
+      {!cordStatus && <div className="preferences-container">
+        <h1>Gym Finder</h1>
+        <h2>Gyms near you that fit your needs.</h2>
+
+          <Form
+            formStatus={formStatus}
+            setFormStatus={setFormStatus}
+            setPreferences={setPreferences}
+          />
+        <Search
+          setCoordinates={setCoordinates}
+          setCordStatus={setCordStatus}
+          setNear={setNear}
+          type={preferences.type}
         />
-      )}
+      </div>}
+      {cordStatus && <div className="container">
+        <Gyms gymInfo={gymInfo} near={near} favDisplay={favDisplay} favorites={favorites} setFavorites={setFavorites} />
+        {cordStatus && <Map coordinates={coordinates} gymInfo={gymInfo} />}
+      </div>}
     </div>
   );
 };

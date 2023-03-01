@@ -5,7 +5,7 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
-  const Search = ({ setCoordinates, setCordStatus, formStatus, setAddressStatus }) => {
+  const Search = ({ setCoordinates, setCordStatus, formStatus, setNear, type }) => {
     const {
       ready,
       value,
@@ -32,10 +32,11 @@ import useOnclickOutside from "react-cool-onclickoutside";
     const handleSelect =
       ({ description }) =>
       () => {
+        if (type) {
         // When user selects a place, we can replace the keyword without request data from API
         // by setting the second parameter to "false"
         setValue(description, false);
-        setAddressStatus(false);
+        setNear(description);
         clearSuggestions();
 
         // Get latitude and longitude via utility functions
@@ -45,6 +46,9 @@ import useOnclickOutside from "react-cool-onclickoutside";
           console.log("📍 Coordinates: ", { lat, lng });
           setCordStatus(true);
         });
+      } else {
+        alert('Please select category');
+      }
       };
 
     const renderSuggestions = () =>
@@ -63,9 +67,10 @@ import useOnclickOutside from "react-cool-onclickoutside";
 
     return (
       <div ref={ref}>
-        <form>
+        <form className="search-box">
           <img src="https://d214hhm15p4t1d.cloudfront.net/nzr/00cf54ab5dcdbb74f6e98097c3b6538e341d6d3f/img/search.f9467441.svg"></img>
           <input
+            className="input"
             value={value}
             type="text"
             placeholder="Search by city or neighborhood"

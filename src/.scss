@@ -1,57 +1,150 @@
-h1 {
-  display:flex;
-  justify-content: center;
+// BANNER / FAVORITE NAV
+.banner-container {
+	display: flex;
+  align-items: center;
+	justify-content: space-between;
+	padding: 20px;
+	position:sticky;
+	z-index: 1;
+	width: -webkit-fill-available;
+	background-color: rgba(246,246,246,255);
 }
 
-.container {
-  position: relative;
-  height: 100%;
-  width: 1086px;
+.icon {
+  width: 5%;
+                height: 5%;
+                object-fit: contain
 }
 
-.map-container {
+// HOME SELECTION CONTAINER
+.preferences-container {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
 
-  width: 50%;
-  height: 50vh;
+  .search-box {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 10px;
+    width: 488px;
+    height: 50px;
+  }
+
+  .input {
+    padding: 18px 24px 18px 44px;
+    color: #0a0f1c;
+    font-size: 16px;
+    line-height: 24px;
+    background-color: #fff;
+    border: 1px solid #ebeae6;
+    border-radius: 6px;
+    width: 100%;
+    cursor: text;
+  }
+}
+
+body {
+  margin: 0px 0px 0px 0px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: lighter;
+  background-image:url('../gymfinderbackground.jpeg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h1 {
+  position: relative;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  margin: 0
+}
+
+h2 {
+  position: relative;
+  font-size: 30px;
+  color: white;
+  text-align: center;
 }
 
 .specs {
   display: flex;
-  justify-content: center;
-  justify-items: baseline;
+  color:white;
+  margin-bottom: 25px;
 }
 
-body {
-  background-color: gray;
-}
 
-// GYM THUMBNAILS
-.thumbnail-container {
+// MAP AND THUMBNAIL CONTAINER //
+.container {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: row;
+  height: 100%;
+  padding: 10px 0;
+  justify-content: space-evenly;
+  background-color: white;
+
+  .thumbnail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 50%;
+    margin-right: 20px;
+  }
+
+  .map-container {
+    display: flex;
+    width: 50%;
+    height: 50vh;
+    border-radius: 25px 25px 25px 25px;
+  }
+}
+
+// GYM THUMBNAILS //
+.thumbnail-label {
+  display: flex;
+  position: absolute;
 }
 
 .thumbnail {
   display: flex;
   flex-direction: column;
-  align-content: space-around;
   max-width: 274px;
-  height: 350px;
   flex-basis: 33.3333333%;
+  margin: 10px 0px;
+  padding: 15px;
+  border-radius: 10px;
+  border-color: white;
+  overflow: hidden;
 
-.thumbnailImage {
-  height: 164px;
-  min-height: 164px;
+  .thumbnailImage {
+    height: 164px;
+    min-height: 164px;
+    margin-top: 20px;
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .thumbnailInfo {
+    height: 30%;
+    padding: 10px;
+    background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0px 0px 10px 10px;
+  }
 }
 
-.thumbnailInfo {
-  height: 30%;
-      padding: 10px;
-      background-color: #eee;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+.fav-button {
+  border: 1px solid #ebeae6;
+  cursor: pointer;
 }
+
+.details {
+  display: flex;
+  justify-content: space-between;
 }
