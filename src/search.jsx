@@ -5,6 +5,8 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
+
+
   const Search = ({ setCoordinates, setCordStatus, formStatus, setNear, type }) => {
     const {
       ready,
@@ -59,8 +61,8 @@ import useOnclickOutside from "react-cool-onclickoutside";
         } = suggestion;
 
         return (
-          <li key={place_id} onClick={handleSelect(suggestion)}>
-            <strong>{main_text}</strong> <small>{secondary_text}</small>
+          <li className="list-item" key={place_id} onClick={handleSelect(suggestion)}>
+            <strong>{main_text}</strong> <small className="list-subitem">{secondary_text}</small>
           </li>
         );
       });
@@ -68,7 +70,6 @@ import useOnclickOutside from "react-cool-onclickoutside";
     return (
       <div ref={ref}>
         <form className="search-box">
-          <img src="https://d214hhm15p4t1d.cloudfront.net/nzr/00cf54ab5dcdbb74f6e98097c3b6538e341d6d3f/img/search.f9467441.svg"></img>
           <input
             className="input"
             value={value}
@@ -76,7 +77,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
             placeholder="Search by city or neighborhood"
             onChange={handleInput}
             disabled={!ready}
-          />{status === "OK" && <ul>{renderSuggestions()}</ul>}
+          />{status === "OK" && <ul className="list-box">{renderSuggestions()}</ul>}
         </form>
       </div>
     );

@@ -23,56 +23,66 @@ const Form = ({ preferences, setFormStatus, setPreferences }) => {
 
   return (
     <div className="specs">
-      <fieldset>
-      <legend>Which category are you interested in?</legend>
+      <fieldset className="specs-field">
+      <legend className="specs-title">Which category are you interested in?</legend>
+      <div className="specs-input">
         <input
           type="radio"
           name="type"
-          id="type"
+          id="commercial"
           value="Commercial"
           onChange={selectHandler}
         />
-        <label>Commercial Gyms</label>
+        <label for="commercial">Commercial Gyms</label>
         <input
           type="radio"
           name="type"
-          id="type"
+          id="crossfit"
           value="Crossfit"
           onChange={selectHandler}
         />
-        <label>Crossfit Gyms</label>
+        <label for="crossfit">Crossfit Gyms</label>
         <input
           type="radio"
           name="type"
-          id="type"
+          id="group"
           value="Group"
           onChange={selectHandler}
         />
-        <label>Group Fitness Classes</label>
+        <label for="group">Group Fitness Classes</label>
         <input
           type="radio"
           name="type"
-          id="type"
+          id="rock"
           value="rock%20climbing"
           onChange={selectHandler}
         />
-        <label>Rock Climbing</label>
+        <label for="rock">Rock Climbing</label>
         <input
           type="radio"
           name="type"
-          id="type"
+          id="yoga"
           value="Yoga"
           onChange={selectHandler}
         />
-        <label>Yoga</label>
+        <label for="yoga">Yoga</label>
         <input
           type="radio"
           name="type"
-          id="type"
+          id="pilates"
           value="Pilates"
           onChange={selectHandler}
         />
-        <label>Pilates</label>
+        <label for="pilates">Pilates</label>
+        <input
+          type="radio"
+          name="type"
+          id="cheap"
+          value="cheap"
+          onChange={selectHandler}
+        />
+        <label for="cheap">Pilates</label>
+        </div>
       </fieldset>
     </div>
   );

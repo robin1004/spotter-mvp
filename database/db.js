@@ -26,6 +26,11 @@ const getFavorites = () => {
   return Favs.find({});
 }
 
+const deleteFromFavorites = (input) => {
+  let removed = input.ref_id;
+  return Favs.deleteOne({ref_id: removed})
+}
+
 const Favs = mongoose.model("Favs", favSchema);
 
-module.exports = { Favs, addToFavorites, getFavorites };
+module.exports = { Favs, addToFavorites, getFavorites, deleteFromFavorites };

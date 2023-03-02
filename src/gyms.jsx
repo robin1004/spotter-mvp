@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, favImages }) => {
+const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, setAddedToFav, addedToFav, setHover, setHoverInfo }) => {
   const [img, setImg] = useState(false);
   const [details, setDetails] = useState([]);
   const [images, setImages] = useState([]);
@@ -61,35 +61,61 @@ const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, favImages })
     getImages();
   }, [placeId, imageRef]);
 
+  const handleHover = (e) => {
+    setHover(true)
+    setHoverInfo([e.target.dataset.value.split(',')]);
+    console.log('this is e:', e, 'this is value:', e.target.dataset.value)
+  }
+
   const eachGym = (details, images) => {
     return details.map((detail, index) => {
       const image = images[index];
+      if (detail.website === undefined) {
+        detail.website = "https://en.wikipedia.org/wiki/HTTP_404";
+      }
       const favoriteHandler = () => {
+        setAddedToFav(!addedToFav);
         axios({
-          method: 'post',
-          url: 'http://localhost:1100/favorites',
+          method: "post",
+          url: "http://localhost:1100/favorites",
           data: {
             ref_id: detail.reference,
             detail: detail,
             image: image,
-          }
+          },
         })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log('error message: ', err);
-        })
-      }
+          .then((res) => {
+            setFavorites(res.data);
+          })
+          .catch((err) => {
+            console.log("error message: ", err);
+          });
+      };
       return (
         <div className="thumbnail" key={index}>
           <img className="thumbnailImage" src={image}></img>
           <div className="thumbnailInfo">
-            <div>{detail.name}</div>
+            <div
+              className="gym-name"
+              data-value={[
+                detail.geometry.location.lat,
+                detail.geometry.location.lng
+              ]}
+              onMouseEnter={(e) => handleHover(e)}
+              onMouseLeave={() => setHover(false)}
+            >
+              {detail.name}
+            </div>
             <div className="details">
               <a href={detail.website}>Details</a>
               <div>Gym in {detail.address_components[3].long_name}</div>
-              <button className="fav-button" value={{name: detail.name, website: detail.website}} onClick={favoriteHandler}><i class="fa fa-heart-o"></i></button>
+              <button
+                className="fav-button"
+                value={{ name: detail.name, website: detail.website }}
+                onClick={favoriteHandler}
+              >
+                <i class="fa fa-heart-o"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -99,15 +125,47 @@ const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, favImages })
 
   const eachFav = (details) => {
     return details.map((detail, index) => {
+      const innerDetail = detail.detail;
+      const deleteHandler = () => {
+        axios({
+          method: "delete",
+          url: "http://localhost:1100/favorites",
+          data: {
+            ref_id: innerDetail.reference
+          }
+        })
+        .then((res) => {
+          setFavorites(res.data);
+        })
+        .catch(err => {
+          console.log("error message: ", err);
+        })
+      }
       return (
         <div className="thumbnail" key={index}>
           <img className="thumbnailImage" src={detail.image}></img>
           <div className="thumbnailInfo">
-            <div>{detail.detail.name}</div>
+            <div
+              className="gym-name"
+              data-value={[
+                innerDetail.geometry.location.lat,
+                innerDetail.geometry.location.lng
+              ]}
+              onMouseEnter={(e) => handleHover(e)}
+              onMouseLeave={() => setHover(false)}
+            >
+              {innerDetail.name}
+            </div>
             <div className="details">
-              <a href={detail.detail.website}>Details</a>
-              <div>Gym in {detail.detail.address_components[3].long_name}</div>
-              <button className="fav-button" value={{name: detail.detail.name, website: detail.detail.website}}><i class="fa fa-window-close-o"></i></button>
+              <a href={innerDetail.website}>Details</a>
+              <div>Gym in {innerDetail.address_components[3].long_name}</div>
+              <button
+                className="fav-button"
+                value={{ name: innerDetail.name, website: innerDetail.website }}
+                onClick={deleteHandler}
+              >
+                <i class="fa fa-trash"></i>
+              </button>
             </div>
           </div>
         </div>

@@ -27,6 +27,12 @@ const App = () => {
 
   const [favDisplay, setFavDisplay] = useState(false);
 
+  const [addedToFav, setAddedToFav] = useState(false);
+
+  const [hover, setHover] = useState(false);
+
+  const [hoverInfo, setHoverInfo] = useState([]);
+
   useEffect(() => {
     async function searchGyms() {
       if (preferences.type && coordinates) {
@@ -58,31 +64,50 @@ const App = () => {
       })
     }
     getFavorites();
-  }, [])
+  }, [addedToFav])
 
   return (
     <div>
-      <Banner setFavorites={setFavorites} favDisplay={favDisplay} setFavDisplay={setFavDisplay} />
-      {!cordStatus && <div className="preferences-container">
-        <h1>Gym Finder</h1>
-        <h2>Gyms near you that fit your needs.</h2>
+      <Banner
+        setCordStatus={setCordStatus}
+        setFavorites={setFavorites}
+        favDisplay={favDisplay}
+        setFavDisplay={setFavDisplay}
+      />
+      {!cordStatus && (
+        <div className="preferences-container">
+          <h1>Gym Finder</h1>
+          <h2>Gyms near you that fit your needs.</h2>
 
           <Form
             formStatus={formStatus}
             setFormStatus={setFormStatus}
             setPreferences={setPreferences}
           />
-        <Search
-          setCoordinates={setCoordinates}
-          setCordStatus={setCordStatus}
-          setNear={setNear}
-          type={preferences.type}
-        />
-      </div>}
-      {cordStatus && <div className="container">
-        <Gyms gymInfo={gymInfo} near={near} favDisplay={favDisplay} favorites={favorites} setFavorites={setFavorites} />
-        {cordStatus && <Map coordinates={coordinates} gymInfo={gymInfo} />}
-      </div>}
+          <Search
+            setCoordinates={setCoordinates}
+            setCordStatus={setCordStatus}
+            setNear={setNear}
+            type={preferences.type}
+          />
+        </div>
+      )}
+      {cordStatus && (
+        <div className="container">
+          <Gyms
+            gymInfo={gymInfo}
+            near={near}
+            favDisplay={favDisplay}
+            favorites={favorites}
+            setFavorites={setFavorites}
+            addedToFav={addedToFav}
+            setAddedToFav={setAddedToFav}
+            setHover={setHover}
+            setHoverInfo={setHoverInfo}
+          />
+          {cordStatus && <Map coordinates={coordinates} gymInfo={gymInfo} hover={hover} hoverInfo={hoverInfo} />}
+        </div>
+      )}
     </div>
   );
 };

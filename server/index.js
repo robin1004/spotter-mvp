@@ -5,7 +5,7 @@ const axios = require('axios');
 const app = express();
 const cors = require('cors');
 const db = require('../database/index.js')
-const { addToFavorites, getFavorites } = require('../database/db.js');
+const { addToFavorites, getFavorites, deleteFromFavorites } = require('../database/db.js');
 
 
 app.use(cors());
@@ -79,8 +79,27 @@ app.get('/favorites', (req, res) => {
 })
 
 app.post('/favorites', (req, res) => {
-  addToFavorites(req.body);
-    res.sendStatus(201);
+  addToFavorites(req.body)
+  .then((result) => {
+    getFavorites().then(result => {
+      res.send(result);
+    })
+  })
+  .catch(err => {
+    console.log(err);
+  })
+})
+
+app.delete('/favorites', (req, res) => {
+  deleteFromFavorites(req.body)
+  .then((result) => {
+    getFavorites().then(result => {
+      res.send(result);
+    })
+  })
+  .catch(err => {
+    console.log(err);
+  })
 })
 
 app.listen(1100, () => {
