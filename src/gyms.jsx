@@ -99,7 +99,8 @@ const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, setAddedToFa
               className="gym-name"
               data-value={[
                 detail.geometry.location.lat,
-                detail.geometry.location.lng
+                detail.geometry.location.lng,
+                detail.website
               ]}
               onMouseEnter={(e) => handleHover(e)}
               onMouseLeave={() => setHover(false)}
@@ -149,7 +150,8 @@ const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, setAddedToFa
               className="gym-name"
               data-value={[
                 innerDetail.geometry.location.lat,
-                innerDetail.geometry.location.lng
+                innerDetail.geometry.location.lng,
+                innerDetail.website
               ]}
               onMouseEnter={(e) => handleHover(e)}
               onMouseLeave={() => setHover(false)}

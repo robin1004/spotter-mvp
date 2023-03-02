@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import Gyms from './gyms.jsx';
 
-console.log(Gyms);
-
 const libraries = ["places"];
 
 const Map = ({ coordinates, gymInfo, hover, hoverInfo }) => {
-  console.log(gymInfo);
+  console.log(hover);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -23,20 +21,21 @@ const Map = ({ coordinates, gymInfo, hover, hoverInfo }) => {
   };
 
   const gymCordinates = gymInfo.map((gym) => {
+    let lat = gym.geometry.location.lat;
+    let lng = gym.geometry.location.lng;
+
     return (
       <div>
         <Marker
           position={{
-            lat: gym.geometry.location.lat,
-            lng: gym.geometry.location.lng,
+            lat,
+            lng,
           }}
         />
         ;
       </div>
     );
   });
-
-  console.log(hoverInfo);
 
   return (
     <GoogleMap
@@ -45,19 +44,12 @@ const Map = ({ coordinates, gymInfo, hover, hoverInfo }) => {
       center={{ lat: coordinates[0], lng: coordinates[1] }}
       mapContainerClassName="map-container"
     >
-      {/* {map && (
-          <Marker position={{ lat: coordinates[0], lng: coordinates[1] }} />
-        )} */}
-      {map && hover && (
+      {map & hover ? (
         <Marker
           position={{ lat: Number(hoverInfo[0]), lng: Number(hoverInfo[1]) }}
-          icon={{
-            url: "http://maps.google.com/mapfiles/kml/paddle/blu-blank.png",
-          scaledSize: new window.google.maps.Size(64, 64),
-          labelOrigin: new window.google.maps.Point(32, 26),
-        }}
+          icon="https://maps.google.com/mapfiles/ms/icons/green-dot.png"
         />
-      )}
+      ) : null}
       {map && gymCordinates}
     </GoogleMap>
   );
