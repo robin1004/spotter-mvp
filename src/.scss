@@ -170,14 +170,13 @@ h2 {
     max-width: calc(100vw - 30vh);
     height: 92vh;
     overflow-y: auto;
-    // overflow-x: hidden;
+    overflow-x: hidden;
   }
 
   .map-container {
     position: sticky;
-    top: 10px;
     display: flex;
-    width: 250vh;
+    width: 170vh;
     height: 92vh;
     margin-left: 10px;
     border-radius: 25px;
@@ -187,9 +186,10 @@ h2 {
 // GYM THUMBNAILS //
 .thumbnail-label {
   display: flex;
-  position: absolute;
+  position: sticky;
+  padding: 10px;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin-left: 15px;
   font-weight: 700;
   font-size: 20px;

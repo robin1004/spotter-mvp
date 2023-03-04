@@ -176,13 +176,15 @@ const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, setAddedToFa
   };
 
   return (
+    <div>
+      {near && (
+        <div className="thumbnail-label">{`List of gyms near ${near}`}</div>
+      )}
     <div className="thumbnail-container">
       {!favDisplay && eachGym(details, images)}
       {favDisplay && eachFav(favorites)}
       {/* {favDisplay && eachGym(favorites, images)} */}
-      {near && (
-        <div className="thumbnail-label">{`List of gyms near ${near}`}</div>
-      )}
+    </div>
     </div>
   );
 };

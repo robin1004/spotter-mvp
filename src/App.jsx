@@ -73,6 +73,7 @@ const App = () => {
         setFavorites={setFavorites}
         favDisplay={favDisplay}
         setFavDisplay={setFavDisplay}
+        cordStatus={cordStatus}
       />
       {!cordStatus && (
         <div className="preferences-container">
