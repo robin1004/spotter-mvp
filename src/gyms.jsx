@@ -63,7 +63,7 @@ const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, setAddedToFa
 
   const handleHover = (e) => {
     setHover(true)
-    setHoverInfo([e.target.dataset.value.split(',')]);
+    setHoverInfo(e.target.dataset.value.split(','));
     console.log('this is e:', e, 'this is value:', e.target.dataset.value)
   }
 

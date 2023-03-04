@@ -40,17 +40,27 @@ const Map = ({ coordinates, gymInfo, hover, hoverInfo }) => {
   return (
     <GoogleMap
       onLoad={onLoad}
-      zoom={10}
-      center={{ lat: coordinates[0], lng: coordinates[1] }}
+      zoom={11}
+      center={{ lat: coordinates[0] || hoverInfo[0], lng: coordinates[1] || hoverInfo[1] }}
       mapContainerClassName="map-container"
     >
-      {map & hover ? (
+      {map && hover ? (
         <Marker
           position={{ lat: Number(hoverInfo[0]), lng: Number(hoverInfo[1]) }}
-          icon="https://maps.google.com/mapfiles/ms/icons/green-dot.png"
+          icon={{
+            url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            scaledSize: new window.google.maps.Size(41, 37),
+          }}
         />
       ) : null}
       {map && gymCordinates}
+      <Marker
+        position={{ lat: coordinates[0], lng: coordinates[1] }}
+        icon={{
+          url: "https://maps.google.com/mapfiles/ms/icons/blue-pushpin.png",
+          scaledSize: new window.google.maps.Size(40, 40),
+        }}
+      />
     </GoogleMap>
   );
 };

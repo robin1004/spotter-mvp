@@ -74,14 +74,6 @@ const Form = ({ preferences, setFormStatus, setPreferences }) => {
           onChange={selectHandler}
         />
         <label for="pilates">Pilates</label>
-        <input
-          type="radio"
-          name="type"
-          id="cheap"
-          value="cheap"
-          onChange={selectHandler}
-        />
-        <label for="cheap">Pilates</label>
         </div>
       </fieldset>
     </div>
