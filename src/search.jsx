@@ -4,6 +4,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
+import { Link } from 'react-router-dom';
 
 
 
@@ -61,9 +62,11 @@ import useOnclickOutside from "react-cool-onclickoutside";
         } = suggestion;
 
         return (
+          <Link to="/gyms">
           <li className="list-item" key={place_id} onClick={handleSelect(suggestion)}>
             <strong>{main_text}</strong> <small className="list-subitem">{secondary_text}</small>
           </li>
+          </Link>
         );
       });
 

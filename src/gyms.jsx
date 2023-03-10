@@ -108,7 +108,7 @@ const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, setAddedToFa
               {detail.name}
             </div>
             <div className="details">
-              <a href={detail.website}>Details</a>
+              <a target="_blank" rel="noopener noreferrer" href={detail.website}>Details</a>
               <div>Gym in {detail.address_components[3].long_name}</div>
               <button
                 className="fav-button"
@@ -178,7 +178,7 @@ const Gyms = ({ gymInfo, near, favorites, setFavorites, favDisplay, setAddedToFa
   return (
     <div>
       {near && (
-        <div className="thumbnail-label">{`List of gyms near ${near}`}</div>
+        <div className="thumbnail-label">{`List of selected gyms near ${near}`}</div>
       )}
     <div className="thumbnail-container">
       {!favDisplay && eachGym(details, images)}

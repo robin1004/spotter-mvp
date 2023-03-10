@@ -11,8 +11,8 @@
 }
 
 .icon {
-  width: 6%;
-  height: 6%;
+  width: 15%;
+  height: 15%;
   object-fit: contain;
   cursor: pointer;
 }
@@ -180,6 +180,8 @@ h2 {
     height: 92vh;
     margin-left: 10px;
     border-radius: 25px;
+    overflow: hidden;
+
   }
 }
 
@@ -252,6 +254,7 @@ h2 {
 // DETAILS SEGMENT OF GYMS
 .details {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   color: rgb(114, 111, 108);
   letter-spacing: -0.5px;
